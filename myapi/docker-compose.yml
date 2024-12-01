@@ -1,0 +1,20 @@
+#Este arquivo docker-compose.yml configura dois serviços: uma API que é construída a partir do Dockerfile na pasta atual e um banco de dados MongoDB, utilizando a imagem da versão 4.4.3. A API escuta na porta 3000 e se conecta ao MongoDB, que é iniciado primeiro. As variáveis de ambiente definem a configuração da API e a conexão com o banco de dados.
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/myapi
+      - JWT_SECRET=mysecretkey
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.4.3
+    ports:
+      - "27017:27017"
+

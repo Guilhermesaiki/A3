@@ -1,0 +1,24 @@
+// Importa a biblioteca mongoose, que é uma biblioteca do Node.js para modelar objetos MongoDB.
+const mongoose = require('mongoose');
+
+// Define uma função assíncrona chamada connectDB que será usada para conectar ao banco de dados.
+const connectDB = async () => {
+  try {
+    // Tenta conectar ao MongoDB usando a URI armazenada na variável de ambiente MONGO_URI.
+    // As opções useNewUrlParser e useUnifiedTopology ajudam a evitar alguns avisos de depreciação.
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    // Se a conexão for bem-sucedida, imprime uma mensagem no console.
+    console.log('MongoDB connected');
+  } catch (error) {
+    // Se ocorrer um erro durante a conexão, imprime o erro no console.
+    console.error('Database connection error:', error);
+    // Encerra o processo com um código de saída 1, indicando que houve um erro.
+    process.exit(1);
+  }
+};
+
+// Exporta a função connectDB para que possa ser usada em outros arquivos.
+module.exports = connectDB;
